@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import Employee from './employee.js'
+import App from './views/App/App';
+import Employee from './views/employee.js'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './style.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

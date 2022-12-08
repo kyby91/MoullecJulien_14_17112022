@@ -193,3 +193,14 @@ input {
         clip-path: polygon(0% 100%, 100% 100%, 100% 0, 86% 0, 71% 0, 55% 0, 34% 0, 18% 0, 0 0);    
     }
 }
+
+.employee-table-filter{
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    input{
+        width: 200px;
+        height: 20px;
+    }
+}

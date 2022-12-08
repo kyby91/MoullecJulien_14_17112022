@@ -2,7 +2,6 @@ import Dropdown from 'react-dropdown';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-dropdown/style.css';
-import './style.scss';
 import React, { useState } from "react";
 import { Link } from 'react-router-dom'
 
