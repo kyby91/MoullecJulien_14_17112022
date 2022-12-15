@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 
 import styled from 'styled-components'
 import { useTable, useFilters, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table'
@@ -53,14 +53,14 @@ function Table({ columns, data }) {
   
     return (
       <>
-        <table {...getTableProps()}>
-          <thead>
+        <table {...getTableProps()} className='table'>
+          <thead className='th'>
             {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr {...headerGroup.getHeaderGroupProps()} className='tr'>
                 {headerGroup.headers.map(column => (
                   // Add the sorting props to control sorting. For this example
                   // we can add them into the header props
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className='th'>
                     {column.render('Header')}
                     {/* Add a sort direction indicator */}
                     <span>
@@ -75,12 +75,12 @@ function Table({ columns, data }) {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
+          <tbody {...getTableBodyProps()} className='tb'>
             {firstPageRows.map(
               (row, i) => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps()}>
+                  <tr {...row.getRowProps()} className='tr'>
                     {row.cells.map(cell => {
                       return (
                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
@@ -99,75 +99,110 @@ function Table({ columns, data }) {
 
 function Employee() {
     
-    const columns = React.useMemo(
-        () => [
-          {
-            Header: 'Name',
-            columns: [
-              {
-                Header: 'First Name',
-                accessor: 'firstName',
-              },
-              {
-                Header: 'Last Name',
-                accessor: 'lastName',
-              },
-            ],
-          },
-          {
-            Header: 'Info',
-            columns: [
-              {
-                Header: 'Age',
-                accessor: 'age',
-              },
-              {
-                Header: 'Visits',
-                accessor: 'visits',
-              },
-              {
-                Header: 'Status',
-                accessor: 'status',
-              },
-              {
-                Header: 'Profile Progress',
-                accessor: 'progress',
-              },
-            ],
-          },
-        ],
-        []
-    )
-
-    const fakeColumns = [
+  const columns = React.useMemo(
+    () => [
       {
-        Header: 'First Name',
+        Header: 'Name',
         accessor: 'firstName',
       },
       {
         Header: 'Last Name',
         accessor: 'lastName',
       },
-    ]
+      {
+        Header: 'Start Date',
+        accessor: 'startDate',
+      },
+      {
+        Header: 'Department',
+        accessor: 'department',
+      },
+      {
+        Header: 'Date of Birth',
+        accessor: 'dateOfBirth',
+      },
+      {
+        Header: 'Street',
+        accessor: 'street',
+      },
+      {
+        Header: 'City',
+        accessor: 'city',
+      },
+      {
+        Header: 'State',
+        accessor: 'state',
+      },
+      {
+        Header: 'Zip Code',
+        accessor: 'zipCode',
+      }
+    ],
+    []
+  )
+
+  const fakeColumns = [
+    {
+      Header: 'First Name',
+      accessor: 'firstName',
+    },
+    {
+      Header: 'Last Name',
+      accessor: 'lastName',
+    },
+    {
+      Header: 'Start Date',
+      accessor: 'startDate',
+    },
+    {
+      Header: 'Department',
+      accessor: 'department',
+    },
+    {
+      Header: 'Date of Birth',
+      accessor: 'dateOfBirth',
+    },
+    {
+      Header: 'Street',
+      accessor: 'street',
+    },
+    {
+      Header: 'City',
+      accessor: 'city',
+    },
+    {
+      Header: 'State',
+      accessor: 'state',
+    },
+    {
+      Header: 'Zip Code',
+      accessor: 'zipCode',
+    }
+  ]
 
     const fakeData = [
       {
-        firtName : 'toto',
-        lastName : 'tata'
+        firstName : 'toto',
+        lastName : 'tata',
+        startDate : '01/05/2022',
+        department : 'RH',
+        dateOfBirth : '01/08/1995',
+        street : 'milk road',
+        city : 'NY',
+        state : 'IDF',
+        zipCode : '87520'
       },
-      {
-        firtName : 'toto2',
-        lastName : 'tata2'
-      },
+      
     ]
     
-    const data = React.useMemo(() => makeData(2000), [])
+    // const data = React.useMemo(() => makeData(2000), [])
 
     // const Data = [
     //     {
             
     //     }
     // ]
+    
 
  return(
     <div className='employee'>
@@ -177,6 +212,7 @@ function Employee() {
                 <label>Show<select><option value="10">10</option></select>entries</label>
                 <label>Search:<input type='search'></input></label>
             </div>
+            <Table columns={columns} data={fakeData} />
             <div>
             </div>
         </div>

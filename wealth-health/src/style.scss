@@ -204,3 +204,41 @@ input {
         height: 20px;
     }
 }
+
+
+.table {
+    border-spacing: 0;
+    border: 1px solid black;
+    width: 900px;
+
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+}
+
+
+.modal{
+    background-color: #AE1100;
+    width: 300px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 39%;
+    top: 42%;
+    i{
+        position: absolute;
+        top: 10%;
+        right: 5%;
+    }
+}
