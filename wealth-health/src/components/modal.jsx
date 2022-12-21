@@ -2,7 +2,6 @@ import React, {useState} from "react";
 
 const Modal = () => {
 
-    const [isShown, setIsShown] = useState(false);
 
     return (
         <div className="modal">

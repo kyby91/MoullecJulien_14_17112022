@@ -5,6 +5,8 @@ import 'react-dropdown/style.css';
 import React, { useState, useContext } from "react";
 import { Link } from 'react-router-dom'
 import UserContext from '../../utils/UserContext'
+import Modal from '../../components/modal.jsx'
+import Moment from 'moment';
 
 
 function App() {
@@ -249,7 +251,7 @@ function App() {
   ];
 
   const {users} = useContext(UserContext);
-  console.log(users)
+    //   console.log(users)
 
   let options = []
   states.forEach(elm =>{
@@ -272,6 +274,9 @@ function App() {
   const [zipCode, setZipCode] = useState(null);
   const [departmentValue, setDepartmentValue] = useState(null);
 
+  
+  const [isShown, setIsShown] = useState(false);
+
     //   console.log(birthDate, startDate, firstName, lastName, street, city, state, zipCode, departmentValue);
     //   console.log(firstName);
     const handleSubmit = () =>{
@@ -285,12 +290,17 @@ function App() {
 
         //Lancer la focntuon registerUser
 
-        if(firstName && lastName && street && city &&  zipCode  ) {
-            console.log('ok');
+        if(firstName && lastName && birthDate && startDate && street && city && state && zipCode && departmentValue) {
+            console.log('ok');            
+            setIsShown(current => !current);
+            console.log(firstName , lastName , birthDate , startDate , street , city , state , zipCode , departmentValue);
         } else {
             console.log('nooooo');
+            console.log(firstName , lastName , birthDate , startDate , street , city , state , zipCode , departmentValue);
         }     
     }
+
+    console.log(Moment(birthDate).format('DD-MM-YYYY'));
   
 
   return (
@@ -311,17 +321,18 @@ function App() {
                     {/* <input id="start-date" type="text" placeholder='Start Date'/> */}
                     <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} placeholderText='Start Date'/>
 
-                    <fieldset class="address">
+                    <fieldset className="address">
                         <legend>Address</legend>
                         <input id="street" type="text" placeholder='Street' onChange={(e) => setStreet(e.target.value)}/>
                         <input id="city" type="text" placeholder='City' onChange={(e) => setCity(e.target.value)}/>
-                        <Dropdown options={options}  value='State'  className='dropdown' onChange={(e) => console.log(e.value)}/>
+                        <Dropdown options={options}  value='State'  className='dropdown' onChange={(e) => setState(e.value)}/>
                         <input id="zip-code" type="number" placeholder='Zip Code' onChange={(e) => setZipCode(e.target.value)}/>
                     </fieldset>
-                    <Dropdown options={department} value={defaultDepartment} className='dropdown' />
+                    <Dropdown options={department} value={defaultDepartment} className='dropdown' onChange={(e) => setDepartmentValue(e.value)}/>
                 </form>
 
                 <button onClick={(e) => handleSubmit(e)} className='save'>Save</button>
+                {isShown ? <Modal></Modal> : <div></div>}
             </div>
         </main>
         </div>
