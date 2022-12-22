@@ -250,7 +250,6 @@ function App() {
     }
   ];
 
-  const {users} = useContext(UserContext);
     //   console.log(users)
 
   let options = []
@@ -284,6 +283,15 @@ function App() {
         const data = {
             firstName,
             lastName,
+            // startDate : Moment(birthDate).format('DD-MM-YYYY'),
+            // dateOfBirth : Moment(startDate).format('DD-MM-YYYY'),
+            startDate,
+            dateOfBirth : birthDate,
+            street,
+            city,
+            state,
+            zipCode,
+            department : departmentValue
         }
 
         console.log(data)
@@ -293,22 +301,22 @@ function App() {
         if(firstName && lastName && birthDate && startDate && street && city && state && zipCode && departmentValue) {
             console.log('ok');            
             setIsShown(current => !current);
-            console.log(firstName , lastName , birthDate , startDate , street , city , state , zipCode , departmentValue);
+            registerUser(data)
         } else {
             console.log('nooooo');
             console.log(firstName , lastName , birthDate , startDate , street , city , state , zipCode , departmentValue);
         }     
     }
+    
 
-    console.log(Moment(birthDate).format('DD-MM-YYYY'));
-  
-
+  const {users, registerUser} = useContext(UserContext)
+    console.log(users);
   return (
     <userProvider>
         <div className="App">
         <header>
             <h1>HRNET</h1>
-            <Link to='/employee'>View Current Employees</Link>
+            <Link to='/employee' className='header-link'>View Current Employees</Link>
         </header>
         <main>
             <h2>Create employee</h2>
@@ -331,8 +339,8 @@ function App() {
                     <Dropdown options={department} value={defaultDepartment} className='dropdown' onChange={(e) => setDepartmentValue(e.value)}/>
                 </form>
 
-                <button onClick={(e) => handleSubmit(e)} className='save'>Save</button>
-                {isShown ? <Modal></Modal> : <div></div>}
+                <button onClick={(e) => {handleSubmit(e)}} className='save'>Save</button>
+                {isShown ? <Modal close={setIsShown}></Modal> : ''}
             </div>
         </main>
         </div>

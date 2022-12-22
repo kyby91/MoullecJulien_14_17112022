@@ -1,36 +1,8 @@
-import React, {useMemo} from 'react'
-
-import styled from 'styled-components'
+import React, {useMemo, useState} from 'react'
 import { useTable, useFilters, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table'
+import GlobalFilter from '../components/GlobalFilter.jsx'
+import { Link } from 'react-router-dom'
 
-const Styles = styled.div`
-  padding: 1rem;
-
-  table {
-    border-spacing: 0;
-    border: 1px solid black;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-    }
-  }
-`
 
 function Table({ columns, data }) {
     const {
@@ -39,20 +11,23 @@ function Table({ columns, data }) {
       headerGroups,
       rows,
       prepareRow,
+      state,
+      setGlobalFilter,
     } = useTable(
       {
         columns,
         data,
       },
-      useSortBy
+      useGlobalFilter, useSortBy
     )
-  
+    const {globalFilter} = state
     // We don't want to render all 2000 rows for this example, so cap
     // it at 20 for this use case
     const firstPageRows = rows.slice(0, 20)
   
     return (
       <>
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}></GlobalFilter>
         <table {...getTableProps()} className='table'>
           <thead className='th'>
             {headerGroups.map(headerGroup => (
@@ -180,20 +155,29 @@ function Employee() {
     }
   ]
 
-    const fakeData = [
-      {
-        firstName : 'toto',
-        lastName : 'tata',
-        startDate : '01/05/2022',
-        department : 'RH',
-        dateOfBirth : '01/08/1995',
-        street : 'milk road',
-        city : 'NY',
-        state : 'IDF',
-        zipCode : '87520'
-      },
-      
-    ]
+  const fakeData = [
+    {
+      firstName : 'toto',
+      lastName : 'tata',
+      startDate : '01/05/2022',
+      department : 'RH',
+      dateOfBirth : '01/08/1995',
+      street : 'milk road',
+      city : 'NY',
+      state : 'IDF',
+      zipCode : '87520'
+    },
+    {
+      firstName : 'sam',
+      lastName : 'ben',
+      startDate : '01/12/2022',
+      department : 'Sales',
+      dateOfBirth : '21/08/1985',
+      street : 'kon',
+      city : 'Paris',
+      state : 'Bourg',
+      zipCode : '18920'
+    }]
     
     // const data = React.useMemo(() => makeData(2000), [])
 
@@ -203,6 +187,7 @@ function Employee() {
     //     }
     // ]
     
+  const [filter, setFilter] = useState('')
 
  return(
     <div className='employee'>
@@ -210,12 +195,12 @@ function Employee() {
         <div className='employee-table'>
             <div className='employee-table-filter'>
                 <label>Show<select><option value="10">10</option></select>entries</label>
-                <label>Search:<input type='search'></input></label>
             </div>
             <Table columns={columns} data={fakeData} />
             <div>
             </div>
         </div>
+        <Link to='/' className='header-link'>Home</Link>
     </div>
  )
 }
