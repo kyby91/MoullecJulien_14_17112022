@@ -1,7 +1,9 @@
-import React, {useMemo, useState} from 'react'
+import React, {useMemo, useState, useContext} from 'react'
 import { useTable, useFilters, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table'
 import GlobalFilter from '../components/GlobalFilter.jsx'
 import { Link } from 'react-router-dom'
+import UserContext from '../utils/UserContext'
+
 
 
 function Table({ columns, data }) {
@@ -177,17 +179,19 @@ function Employee() {
       city : 'Paris',
       state : 'Bourg',
       zipCode : '18920'
-    }]
+  }]
     
-    // const data = React.useMemo(() => makeData(2000), [])
+  // const data = React.useMemo(() => makeData(2000), [])
 
-    // const Data = [
-    //     {
-            
-    //     }
-    // ]
+  // const Data = [
+  //     {
+          
+  //     }
+  // ]
     
   const [filter, setFilter] = useState('')
+
+  const {users, registerUser} = useContext(UserContext)
 
  return(
     <div className='employee'>
@@ -196,7 +200,7 @@ function Employee() {
             <div className='employee-table-filter'>
                 <label>Show<select><option value="10">10</option></select>entries</label>
             </div>
-            <Table columns={columns} data={fakeData} />
+            <Table columns={columns} data={users} />
             <div>
             </div>
         </div>
