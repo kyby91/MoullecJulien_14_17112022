@@ -1,5 +1,5 @@
 import React, {useMemo, useState, useContext} from 'react'
-import { useTable, useFilters, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table'
+import { useTable,  useGlobalFilter,  useSortBy, usePagination } from 'react-table'
 import GlobalFilter from '../components/GlobalFilter.jsx'
 import { Link } from 'react-router-dom'
 import UserContext from '../utils/UserContext'
@@ -12,23 +12,48 @@ function Table({ columns, data }) {
       getTableBodyProps,
       headerGroups,
       rows,
+      page,
       prepareRow,
+      canPreviousPage,
+      canNextPage,
+      pageOptions,
+      pageCount,
+      gotoPage,
+      nextPage,
+      previousPage,
+      setPageSize,
+      state:{pageIndex, pageSize},
       state,
       setGlobalFilter,
     } = useTable(
       {
         columns,
         data,
+        initialState: { pageIndex: 0 },
       },
-      useGlobalFilter, useSortBy
+      useGlobalFilter, useSortBy, usePagination
     )
     const {globalFilter} = state
     // We don't want to render all 2000 rows for this example, so cap
     // it at 20 for this use case
-    const firstPageRows = rows.slice(0, 20)
   
     return (
       <>
+        <pre>
+          <code>
+            {JSON.stringify(
+              {
+                pageIndex,
+                pageSize,
+                pageCount,
+                canNextPage,
+                canPreviousPage,
+              },
+              null,
+              2
+            )}
+          </code>
+        </pre>
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}></GlobalFilter>
         <table {...getTableProps()} className='table'>
           <thead className='th'>
@@ -53,7 +78,7 @@ function Table({ columns, data }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className='tb'>
-            {firstPageRows.map(
+            {page.map(
               (row, i) => {
                 prepareRow(row);
                 return (
@@ -69,7 +94,50 @@ function Table({ columns, data }) {
           </tbody>
         </table>
         <br />
-        <div>Showing the first 20 results of {rows.length} rows</div>
+        <div className="pagination">
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            {'<<'}
+          </button>{' '}
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {'<'}
+          </button>{' '}
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            {'>'}
+          </button>{' '}
+          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+            {'>>'}
+          </button>{' '}
+          <span>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{' '}
+          </span>
+          <span>
+            | Go to page:{' '}
+            <input
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={e => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0
+                gotoPage(page)
+              }}
+              style={{ width: '100px' }}
+            />
+          </span>{' '}
+          <select
+            value={pageSize}
+            onChange={e => {
+              setPageSize(Number(e.target.value))
+            }}
+          >
+            {[10, 20, 30, 40, 50].map(pageSize => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
       </>
     )
 }
@@ -117,69 +185,6 @@ function Employee() {
     ],
     []
   )
-
-  const fakeColumns = [
-    {
-      Header: 'First Name',
-      accessor: 'firstName',
-    },
-    {
-      Header: 'Last Name',
-      accessor: 'lastName',
-    },
-    {
-      Header: 'Start Date',
-      accessor: 'startDate',
-    },
-    {
-      Header: 'Department',
-      accessor: 'department',
-    },
-    {
-      Header: 'Date of Birth',
-      accessor: 'dateOfBirth',
-    },
-    {
-      Header: 'Street',
-      accessor: 'street',
-    },
-    {
-      Header: 'City',
-      accessor: 'city',
-    },
-    {
-      Header: 'State',
-      accessor: 'state',
-    },
-    {
-      Header: 'Zip Code',
-      accessor: 'zipCode',
-    }
-  ]
-
-  const fakeData = [
-    {
-      firstName : 'toto',
-      lastName : 'tata',
-      startDate : '01/05/2022',
-      department : 'RH',
-      dateOfBirth : '01/08/1995',
-      street : 'milk road',
-      city : 'NY',
-      state : 'IDF',
-      zipCode : '87520'
-    },
-    {
-      firstName : 'sam',
-      lastName : 'ben',
-      startDate : '01/12/2022',
-      department : 'Sales',
-      dateOfBirth : '21/08/1985',
-      street : 'kon',
-      city : 'Paris',
-      state : 'Bourg',
-      zipCode : '18920'
-  }]
     
   // const data = React.useMemo(() => makeData(2000), [])
 

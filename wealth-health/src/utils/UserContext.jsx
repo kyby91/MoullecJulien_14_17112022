@@ -1,33 +1,35 @@
 import React from "react";
 import { useState } from "react";
 import { createContext } from "react";
+import fakeData from '../data/fakeData'
 
 import Moment from 'moment';
+console.log(fakeData);
 
-const fakeData = [
-    {
-      firstName : 'toto',
-      lastName : 'tata',
-      startDate : '01/05/2022',
-      department : 'RH',
-      dateOfBirth : '01/08/1995',
-      street : 'milk road',
-      city : 'NY',
-      state : 'IDF',
-      zipCode : '87520'
-    },
-    {
-      firstName : 'sam',
-      lastName : 'ben',
-      startDate : '01/12/2022',
-      department : 'Sales',
-      dateOfBirth : '21/08/1985',
-      street : 'kon',
-      city : 'Paris',
-      state : 'Bourg',
-      zipCode : '18920'
-    }
-]
+// const fakeData = [
+//     {
+//       firstName : 'toto',
+//       lastName : 'tata',
+//       startDate : '01/05/2022',
+//       department : 'RH',
+//       dateOfBirth : '01/08/1995',
+//       street : 'milk road',
+//       city : 'NY',
+//       state : 'IDF',
+//       zipCode : '87520'
+//     },
+//     {
+//       firstName : 'sam',
+//       lastName : 'ben',
+//       startDate : '01/12/2022',
+//       department : 'Sales',
+//       dateOfBirth : '21/08/1985',
+//       street : 'kon',
+//       city : 'Paris',
+//       state : 'Bourg',
+//       zipCode : '18920'
+//     }
+// ]
 
 const UserContext = createContext({});
 
