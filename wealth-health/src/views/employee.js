@@ -39,21 +39,7 @@ function Table({ columns, data }) {
   
     return (
       <>
-        <pre>
-          <code>
-            {JSON.stringify(
-              {
-                pageIndex,
-                pageSize,
-                pageCount,
-                canNextPage,
-                canPreviousPage,
-              },
-              null,
-              2
-            )}
-          </code>
-        </pre>
+        
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}></GlobalFilter>
         <table {...getTableProps()} className='table'>
           <thead className='th'>
@@ -202,9 +188,6 @@ function Employee() {
     <div className='employee'>
         <h1>Current Employees</h1>
         <div className='employee-table'>
-            <div className='employee-table-filter'>
-                <label>Show<select><option value="10">10</option></select>entries</label>
-            </div>
             <Table columns={columns} data={users} />
             <div>
             </div>

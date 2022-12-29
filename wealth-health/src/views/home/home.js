@@ -57,7 +57,7 @@ function App() {
         //Lancer la focntuon registerUser
 
         if(firstName && lastName && birthDate && startDate && street && city && state && zipCode && departmentValue) {        
-            // setIsShown(current => !current);
+            setIsShown(current => !current);
             registerUser(data)
             setFilled(true)
         } else {
