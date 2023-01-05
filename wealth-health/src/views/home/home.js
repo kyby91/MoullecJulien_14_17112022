@@ -5,8 +5,12 @@ import 'react-dropdown/style.css';
 import React, { useState, useContext } from "react";
 import { Link } from 'react-router-dom'
 import UserContext from '../../utils/UserContext'
-import Modal from '../../components/modal.jsx'
+// import Modal from '../../components/modal.jsx'
 import States from '../../data/data.jsx'
+// import Modal from '../../../node_modules/modal-component-for-p14/dist/modal'
+import Modal from 'modal-component-for-p14'
+
+console.log(Modal)
 
 
 function App() {
@@ -32,8 +36,13 @@ function App() {
   const [departmentValue, setDepartmentValue] = useState(null);
 
   
-  const [isShown, setIsShown] = useState(false);
   const [filled, setFilled] = useState(true);
+
+  const [isOpen, setIsOpen] = useState(false)
+
+    const toggleClick = () => {
+        isOpen ? setIsOpen(false) : setIsOpen(true)
+    }
 
     //   console.log(birthDate, startDate, firstName, lastName, street, city, state, zipCode, departmentValue);
     //   console.log(firstName);
@@ -57,7 +66,7 @@ function App() {
         //Lancer la focntuon registerUser
 
         if(firstName && lastName && birthDate && startDate && street && city && state && zipCode && departmentValue) {        
-            setIsShown(current => !current);
+            setIsOpen(true);
             registerUser(data)
             setFilled(true)
         } else {
@@ -115,7 +124,7 @@ function App() {
                 </form>
 
                 
-                {isShown ? <Modal close={setIsShown}></Modal> : ''}
+              <Modal isOpen={isOpen} close={setIsOpen}></Modal>
             </div>
             <button type='sumbit' onClick={(e) => {handleSubmit(e)}} className='save'>Save</button>
         </main>
