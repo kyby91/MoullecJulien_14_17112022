@@ -5,12 +5,9 @@ import 'react-dropdown/style.css';
 import React, { useState, useContext } from "react";
 import { Link } from 'react-router-dom'
 import UserContext from '../../utils/UserContext'
-// import Modal from '../../components/modal.jsx'
 import States from '../../data/data.jsx'
-// import Modal from '../../../node_modules/modal-component-for-p14/dist/modal'
 import Modal from 'modal-component-for-p14'
 
-console.log(Modal)
 
 
 function App() {
