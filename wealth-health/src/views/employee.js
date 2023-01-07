@@ -34,8 +34,6 @@ function Table({ columns, data }) {
       useGlobalFilter, useSortBy, usePagination
     )
     const {globalFilter} = state
-    // We don't want to render all 2000 rows for this example, so cap
-    // it at 20 for this use case
   
     return (
       <>
@@ -46,11 +44,8 @@ function Table({ columns, data }) {
             {headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()} className='tr'>
                 {headerGroup.headers.map(column => (
-                  // Add the sorting props to control sorting. For this example
-                  // we can add them into the header props
                   <th {...column.getHeaderProps(column.getSortByToggleProps())} className='th'>
                     {column.render('Header')}
-                    {/* Add a sort direction indicator */}
                     <span>
                       {column.isSorted
                         ? column.isSortedDesc
@@ -171,18 +166,8 @@ function Employee() {
     ],
     []
   )
-    
-  // const data = React.useMemo(() => makeData(2000), [])
 
-  // const Data = [
-  //     {
-          
-  //     }
-  // ]
-    
-  const [filter, setFilter] = useState('')
-
-  const {users, registerUser} = useContext(UserContext)
+  const {users} = useContext(UserContext)
 
  return(
     <div className='employee'>

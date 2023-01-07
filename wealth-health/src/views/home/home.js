@@ -40,19 +40,11 @@ function App() {
 
   const [isOpen, setIsOpen] = useState(false)
 
-    const toggleClick = () => {
-        isOpen ? setIsOpen(false) : setIsOpen(true)
-    }
-
-    //   console.log(birthDate, startDate, firstName, lastName, street, city, state, zipCode, departmentValue);
-    //   console.log(firstName);
     const handleSubmit = () =>{
 
         const data = {
             firstName,
             lastName,
-            // startDate : Moment(birthDate).format('DD-MM-YYYY'),
-            // dateOfBirth : Moment(startDate).format('DD-MM-YYYY'),
             startDate,
             dateOfBirth : birthDate,
             street,
@@ -63,7 +55,6 @@ function App() {
         }
 
 
-        //Lancer la focntuon registerUser
 
         if(firstName && lastName && birthDate && startDate && street && city && state && zipCode && departmentValue) {        
             setIsOpen(true);
@@ -76,20 +67,6 @@ function App() {
     
 
   const {users, registerUser} = useContext(UserContext)
-    console.log(users);
-
-    // const hzzz = event => {
-    //   console.log('handleSubmit ran');
-  
-    //   // 👇️ clear all input values in the form
-    //   setFirstName('');
-    //   setLastName('');
-    //   setBirthDate('');
-    //   setStartDate('');
-    //   setStreet('');
-    //   setCity('');
-    //   setZipCode('');
-    // };
 
 
 
@@ -107,9 +84,7 @@ function App() {
                 <form action="#"  className='child1' >
                     <input type="text" id="first-name"  placeholder='First Name' className='first-margin' onChange={(e) => setFirstName(e.target.value)}/>
                     <input type="text" id="last-name" placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}/>
-                    {/* <input id="date-of-birth" type="text" placeholder='Date of Birth'/> */}
                     <DatePicker selected={birthDate} onChange={(date) => setBirthDate(date)} placeholderText='Date of Birth'/>
-                    {/* <input id="start-date" type="text" placeholder='Start Date'/> */}
                     <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} placeholderText='Start Date'/>
 
                     <fieldset className="address">
